@@ -1,5 +1,5 @@
 # title
-Enhancing Check-in Sequence Learning with Intent-Aware Prompts in Large Language Models
+Mobility-LLM: Learning Visiting Intentions and Travel Preferences from Human Mobility Data with Large Language Models
 # Datasets
 To demonstrate the superiority of our proposed model, our experiements are carried out on four real-world datasets derived from Gowalla(GOW), WeePlace(WEE), Brightkite(BKC) and FourSquare(TKY) check-in data.
 
