@@ -12,25 +12,19 @@ The below table shows the statistics of three datasets.
 | # POIs      | 52,032    | 9,295      | 3,554        | 11,117       |
 | # Samples   | 413,563   | 104,762    | 44,716       | 60,734       |
 
+- Download processed datasets from following sources:
+    - <a href='https://drive.google.com/drive/folders/1nsGjpQxEe4h4AQT9i3V2f0tUndUIiACa?usp=sharing'>Google Drive</a>
+      - https://drive.google.com/drive/folders/1nsGjpQxEe4h4AQT9i3V2f0tUndUIiACa?usp=sharing 
+    - <a href='https://1drv.ms/f/c/401a59cded375360/EuI9Lfh3qhVPrMdO22wDbc0BjJ_-5M3YIPEOLyrGoEMD3A?e=jBGTCC'>One Drive</a> 
+      - https://1drv.ms/f/c/401a59cded375360/EuI9Lfh3qhVPrMdO22wDbc0BjJ_-5M3YIPEOLyrGoEMD3A?e=jBGTCC
+    - <a href='https://pan.baidu.com/s/1yKBDXZxnIX9r1km7gh3tyg'>BaiduNetDisk</a> code: `x24z`
+      - https://pan.baidu.com/s/1nWWMzS1yQaGdaiVd-njJxQ 
+  - Copy all files and directories to `CACSR-main/data`
+
 # Large Lanugage Models
 We compare eight representative backbones with varying capacities, including TinyLlama, TinyLlama-Chat, LiteLlama, phi-2, pythia-70M, pythia-1B, pythia-2.8B and GPT-2.
 - Download models from following sources:
-    - <a href=''>TinyLlama</a>
-      - https://huggingface.co/
-    - <a href=''>TinyLlama-Chat</a> 
-      - https://huggingface.co/
-    - <a href=''>LiteLlama</a>
-      - https://huggingface.co/
-    - <a href=''>phi-2</a>
-      - https://huggingface.co/
-    - <a href=''>pythia-70M</a> 
-      - https://huggingface.co/
-    - <a href=''>pythia-1B</a>
-      - https://huggingface.co/
-    - <a href=''>pythia-2.8B</a>
-      - https://huggingface.co/
-    - <a href=''>GPT-2</a> 
-      - https://huggingface.co/
+  - <a href='https://huggingface.co/models'>https://huggingface.co/models</a>
   - Copy all files and directories to `check-inLLM/params/*/`
 
 # Requirements
