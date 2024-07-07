@@ -82,7 +82,7 @@ def load_data_from_dataset(set_name, loader, device, user_cnt, venue_cnt, save_s
     return dataset
 
 
-def load_dataset_for_CACSR(name, data_root, save_split=False, device=None):
+def load_dataset_for_MobilityLLM(name, data_root, save_split=False, device=None):
     '''
     1. load data and construct train/val/test dataset
     2. construct temporal graphs gts and spatial graphs gss
