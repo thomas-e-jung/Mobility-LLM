@@ -138,152 +138,7 @@ def getDistance(lat1, lng1, lat2, lng2):
     return s
 
 
-def attention_visualization(batch_attention, events, batch_cnt, batch_size, layers, heads, hierarchical, low_layer, high_layer, dataset_name, category, batch_lat, batch_lng, batch_week, batch_hour, batch_minute):
-    '''
-    attention visualization
-    :param batch_attention:
-    :return:
-    '''
-    '''
-    def draw(data, x, y, ax, bar, bar_min, bar_max):
-        sns.heatmap(data,
-                xticklabels=x, square=True, yticklabels=y, vmin=bar_min-0.01, vmax=bar_max+0.01,
-                cbar=bar, ax=ax, cmap='Blues')
-    '''
-    # color = ['aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgreen', 'lightgray', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen']
-    color = ['black', 'blue', 'lightcoral', 'red', 'brown', 'gold', 'darkorange', 'lime', 'yellow', 'magenta', 'olive', 'purple', 'firebrick', 'indigo', 'deeppink', 'darkgreen', 'cyan', 'slategray', 'darkkhaki', 'peru']  # strong color
-    cnt = 0
-
-    for sample in range(batch_size):
-        # the upper and lower bound of the longitude
-        x_num_list = batch_lng[sample]
-        max_lng = round((round(max(x_num_list),4)+0.01),4)
-        min_lng = round((round(min(x_num_list),4)-0.01),4)
-        range_lng = round(max_lng-min_lng,2)*100
-        if abs(range_lng) < 0.001:
-            range_lng = 5
-        # print("range_lng:" , range_lng)
-
-        # the upper and lower bound of latitude
-        y_num_list = batch_lat[sample]
-        max_lat = round((round(max(y_num_list),4)+0.01),4)
-        min_lat = round((round(min(y_num_list),4)-0.01),4)
-        range_lat = round(max_lat-min_lat,2)*100
-        if abs(range_lat) < 0.001:
-            range_lat = 5
-        # print("range_lat: ", range_lat)
-        '''
-        plt.rcParams['font.sans-serif']=['SimHei']
-        plt.rcParams['axes.unicode_minus']=False
-        fig = plt.figure(figsize=(range_lng,range_lat))
-        plt.xlim(min_lng, max_lng)
-        plt.ylim(min_lat, max_lat)
-        '''
-        # simply process the venue which too close
-        locations = dict()
-        visit = dict()
-        for text, lng, lat in zip(category[sample], batch_lng[sample], batch_lat[sample]):
-            if text not in locations.keys():
-                locations[text] = [1, [lng, lat]]
-            else:
-                locations[text] = [locations[text][0] + 1, [lng, lat]]  # repeated venue
-            visit[text] = 0
-        for key1 in locations.keys():
-            if visit[key1] == 0:
-                lng = locations[key1][1][0]
-                lat = locations[key1][1][1]
-                for key2 in locations.keys():
-                    if key1 != key2 and visit[key2] == 0:
-                        tmp_lng = locations[key2][1][0]
-                        tmp_lat = locations[key2][1][1]
-                        tmp_cnt = locations[key2][0]
-                        # print(lat, lng, tmp_lat, tmp_lng, getDistance(lat, lng, tmp_lat, tmp_lng))
-                        if getDistance(lat, lng, tmp_lat, tmp_lng) < 0.2 or abs(lat - tmp_lat) < 0.0015:  # too close or same latitude（km）
-                            if lat > tmp_lat:  # move down
-                                locations[key2] = [tmp_cnt, [tmp_lng, tmp_lat - 0.002]]
-                            else:  # move up
-                                locations[key2] = [tmp_cnt, [tmp_lng, tmp_lat + 0.002]]
-                visit[key1] = 1
-
-        category_process = []
-        batch_lng_process = []
-        batch_lat_process = []
-        for key in locations.keys():  # remove the repetitive key
-            category_process.append(key)
-            batch_lng_process.append(locations[key][1][0])
-            batch_lat_process.append(locations[key][1][1])
-
-        pic_name = str(batch_cnt) + '_' + str(sample)
-
-        color_cnt = 0
-        '''
-        for text, lng, lat in zip(category_process, batch_lng_process, batch_lat_process):
-            # print(f"{text}: ({lng}, {lat})")
-            plt.plot(lng, lat, 'o', color=color[color_cnt])  # different venue use different color
-            plt.annotate(text, (lng, lat))
-            color_cnt = color_cnt + 1
-        plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)  # set the edge distance
-        plt.savefig(f'./data/attention/jkt_{pic_name}_map.png')
-        plt.savefig(f'./data/attention/jkt_{pic_name}_map.eps', format="eps", dpi=1000)
-        plt.close()
-        '''
-        x = []
-        y = []
-        dict_weeks = {0: 'Sun', 1: 'Mon',  2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat'}
-        for tmp_category, week, hour, minute in zip(category[sample], batch_week[sample], batch_hour[sample], batch_minute[sample]):
-            time = ''
-            reverse_time = ''
-            time = time + dict_weeks[week] + " "
-            reverse_time = reverse_time + tmp_category + " "
-            if hour < 10:
-                time = time + "0" + str(hour) + ":"
-                reverse_time += "0" + str(hour) + ":"
-            else:
-                time = time + str(hour) + ":"
-                reverse_time += str(hour) + ":"
-            if minute < 10:
-                time = time + "0" + str(minute)
-                reverse_time += "0" + str(minute)
-            else:
-                time = time + str(minute)
-                reverse_time += str(minute)
-            time = time + " "  + tmp_category
-            reverse_time += " " + dict_weeks[week]
-            y.append(time)
-            x.append(reverse_time)
-            #fig, axs = plt.subplots(layers, heads, figsize=(20, 32))
-            if hierarchical:
-                low_and_high_layers = [low_layer, high_layer]
-                for i in range(len(batch_attention)):
-                    for layer in range(low_and_high_layers[i]):
-                        for head in range(heads):
-                            if i == 0:
-                                ax = axs[layer][head]
-                            else:
-                                ax = axs[layer + low_and_high_layers[0]][head]
-                            tmp = softmax(batch_attention[i][sample, layer, head, :events, :events])
-                            draw(tmp,
-                                x if (i == 1 and layer == low_and_high_layers[i] - 1) else [], y if head == 0 else [], ax=ax, bar=False if head == heads-1 else False, bar_min=np.min(tmp), bar_max=np.max(tmp))
-                            ax.tick_params(labelsize=20)
-
-            else:
-                for layer in range(layers):
-                    for head in range(heads):
-                        if layers == 1:
-                            ax = axs[head]  # when layers equal to one, there will be a error that *dimension lost*
-                        else:
-                            ax = axs[layer][head]
-                        tmp = softmax(batch_attention[sample, layer, head, :events, :events])
-                        draw(tmp,
-                            x if (layer == layers - 1) else [], y if head == 0 else [], ax=ax, bar=False, bar_min=np.min(tmp), bar_max=np.max(tmp))
-            fig.tight_layout()  # tight layout
-            #plt.savefig(f"./data/attention/jkt_{pic_name}_score.png")
-            #plt.savefig(f"./data/attention/jkt_{pic_name}_score.eps", format="eps", dpi=1000)
-            cnt = cnt + 1
-            #plt.close()
-
-
-def get_s_baselines_total_loss_s_for_CACSR_RNN(loader, model, save_filename=None, params_path=None):
+def get_s_baselines_total_loss_s_for_MobilityLLM_RNN(loader, model, save_filename=None, params_path=None):
     all_loss_s = []
     all_ground_truth_location = []
     all_predicted_topK = []
@@ -310,7 +165,7 @@ def get_s_baselines_total_loss_s_for_CACSR_RNN(loader, model, save_filename=None
 
 
 # for downstream validation bencnmark
-def get_s_baselines_total_loss_s_for_CACSR_DEMO_DOWN(loader, model, downstream='POI', save_filename=None, params_path=None):
+def get_s_baselines_total_loss_s_for_MobilityLLM_DEMO_DOWN(loader, model, downstream='POI', save_filename=None, params_path=None):
     all_loss_s = []
     all_ground_truth_users = []
     all_predicted_topK = []
@@ -343,7 +198,7 @@ def get_s_baselines_total_loss_s_for_CACSR_DEMO_DOWN(loader, model, downstream='
 
 
 # for downstream validation bencnmark
-def get_s_baselines_total_loss_s_for_CACSR_DOWN(loader, model, downstream='POI', save_filename=None, params_path=None):
+def get_s_baselines_total_loss_s_for_MobilityLLM_DOWN(loader, model, downstream='POI', save_filename=None, params_path=None):
     all_loss_s = []
     all_ground_truth_users = []
     all_predicted_topK = []
