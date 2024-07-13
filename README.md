@@ -1,7 +1,7 @@
 # title
 Mobility-LLM: Learning Visiting Intentions and Travel Preferences from Human Mobility Data with Large Language Models
 # Datasets
-To demonstrate the superiority of our proposed model, our experiements are carried out on four real-world datasets derived from Gowalla(GOW), WeePlace(WEE), Brightkite(BKC) and FourSquare(TKY) check-in data.
+To demonstrate the superiority of our proposed model, our experiements are carried out on four real-world datasets derived from Gowalla (GOW), WeePlace (WEE), Brightkite (BKC) and FourSquare (TKY) check-in data.
 
 In order to facilitate the training of our model, Our model undergoes a filtering process that selects high-quality check-in sequences for training. To ensure data consistency, we set a maximum historical time limit of 120 days and filter out users with fewer than 10 records and places visited fewer than 10 times.
 
@@ -17,62 +17,61 @@ The below table shows the statistics of three datasets.
       - https://1drv.ms/f/c/401a59cded375360/EuI9Lfh3qhVPrMdO22wDbc0BjJ_-5M3YIPEOLyrGoEMD3A?e=jBGTCC
     - <a href='https://pan.baidu.com/s/1yKBDXZxnIX9r1km7gh3tyg'>BaiduNetDisk</a> code: `x24z`
       - https://pan.baidu.com/s/1nWWMzS1yQaGdaiVd-njJxQ 
-  - Copy all files and directories to `Mobility-LLM/data/new_datasets`
+  - Copy all files and directories to `MobilityLLM/data/new_datasets`
 
 # Large Lanugage Models
 We compare eight representative backbones with varying capacities, including TinyLlama, TinyLlama-Chat, LiteLlama, phi-2, pythia-70M, pythia-1B, pythia-2.8B and GPT-2.
 - Download models from following sources:
   - <a href='https://huggingface.co/models'>https://huggingface.co/models</a>
-  - Copy all files and directories to `Mobility-LLM/params/*/`
+  - Copy all files and directories to `MobilityLLM/params/*/`
 
 # Requirements
 - python >= 3.6
 - PyTorch >= 1.8
 
 # Usage :
-  Enter directory `check-inLLM`.
+  Enter directory `MobilityLLM`.
   Downstream tasks:
   Location Prediction (LP), Trajectory User Link (TUL), or Time Prediction (TP).
-  model classes:
+  model class:
   TinyLlama-1_1B (TinyLlama), TinyLlama-Chat (TinyLlama-Chat), phi-2 (phi-2), pythia-70M (pythia-70M), pythia-2_8B (pythia-2.8B), pythia-1B (pythia-1B), LiteLlama (LiteLlama), gpt2 (GPT-2).
-  You need to modify the `downstream` field in configuration file to choose the type of tasks.
   - Train model on WEE of LP task:
-    `python train_CHLLM.py --config config/checkin_LLM_wee_POI.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_wee_POI.conf --dataroot data/ --model_class`
     <br>
   - Train model on TKY of LP task:
-    `python train_CHLLM.py --config config/checkin_LLM_tky_POI.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_tky_POI.conf --dataroot data/ --model_class`
     <br>
   - Train model on GOW of LP task:
-    `python train_CHLLM.py --config config/checkin_LLM_gow_POI.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_gow_POI.conf --dataroot data/ --model_class`
     <br>
   - Train model on BKC of LP task:
-    `python train_CHLLM.py --config config/checkin_LLM_bkc_POI.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_bkc_POI.conf --dataroot data/ --model_class`
     <br>
   - Train model on WEE of TUL task:
-    `python train_CHLLM.py --config config/checkin_LLM_wee_TUL.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_wee_TUL.conf --dataroot data/ --model_class`
     <br>
   - Train model on TKY of TUL task:
-    `python train_CHLLM.py --config config/checkin_LLM_tky_TUL.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_tky_TUL.conf --dataroot data/ --model_class`
     <br>
   - Train model on GOW of TUL task:
-    `python train_CHLLM.py --config config/checkin_LLM_gow_TUL.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_gow_TUL.conf --dataroot data/ --model_class`
     <br>
   - Train model on BKC of TUL task:
-    `python train_CHLLM.py --config config/checkin_LLM_bkc_TUL.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_bkc_TUL.conf --dataroot data/ --model_class`
     <br>
   - Train model on WEE of TP task:
-    `python train_CHLLM.py --config config/checkin_LLM_wee_TPP.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_wee_TPP.conf --dataroot data/ --model_class`
     <br>
   - Train model on TKY of TP task:
-    `python train_CHLLM.py --config config/checkin_LLM_tky_TPP.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_tky_TPP.conf --dataroot data/ --model_class`
     <br>
   - Train model on GOW of TP task:
-    `python train_CHLLM.py --config config/checkin_LLM_gow_TPP.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_gow_TPP.conf --dataroot data/ --model_class`
     <br>
   - Train model on BKC of TP task:
-    `python train_CHLLM.py --config config/checkin_LLM_bkc_TPP.conf --dataroot data/ --model_class`
+    `python train_MobilityLLM.py --config config/MobilityLLM_bkc_TPP.conf --dataroot data/ --model_class`
 # Configuration
-The configuration file `checkin_LLM_*.conf` contains three parts: Data, Training and Model:
+The configuration file `MobilityLLM_*.conf` contains three parts: Data, Training and Model:
 
 ## Data
 - dataset_name: The name of the datasets, represents www_GOW, www_BKC, www_TKY or www_WEE.
@@ -99,6 +98,6 @@ The configuration file `checkin_LLM_*.conf` contains three parts: Data, Training
 
 ## Model
 - adv: 0 or 1, enable adversarial or not.
-- downstream: POI_RECOMMENDATION or TUL, representing LP and TUL respestively.
+- downstream: POI, TUL or TPP, representing Location Prediction, Trajectory User Link, and Time Prediction respestively.
 
 The remaining parameters are the best parameters of the model.
