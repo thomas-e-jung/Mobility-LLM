@@ -13,8 +13,6 @@ The below table shows the statistics of three datasets.
 | # Samples   | 413,563   | 104,762    | 44,716       | 60,734       |
 
 - Download processed datasets from following sources:
-    - <a href='https://drive.google.com/drive/folders/17f5UDvRo7Ojjm1peTBh3vdxR4KNX1Lzl?usp=sharing'>Google Drive</a>
-      - https://drive.google.com/drive/folders/17f5UDvRo7Ojjm1peTBh3vdxR4KNX1Lzl?usp=sharing 
     - <a href='https://1drv.ms/f/c/401a59cded375360/EuI9Lfh3qhVPrMdO22wDbc0BjJ_-5M3YIPEOLyrGoEMD3A?e=jBGTCC'>One Drive</a> 
       - https://1drv.ms/f/c/401a59cded375360/EuI9Lfh3qhVPrMdO22wDbc0BjJ_-5M3YIPEOLyrGoEMD3A?e=jBGTCC
     - <a href='https://pan.baidu.com/s/1yKBDXZxnIX9r1km7gh3tyg'>BaiduNetDisk</a> code: `x24z`
