@@ -29,7 +29,7 @@ parser.add_argument("--config", default='/data/ZhangXinyue/MobilityLLM/config/Mo
 parser.add_argument("--dataroot", default='/data/ZhangXinyue/MobilityLLM/data/', type=str,
                     help="data root directory")
 parser.add_argument("--model_class", default='pythia-70M', type=str, help="configuration file path")
-parser.add_argument("--device", default='1', type=str, help="configuration file path")
+parser.add_argument("--device", default='0', type=str, help="configuration file path")
 parser.add_argument("--data_hist", default='1', type=str, help="configuration file path")
 args = parser.parse_args()
 config_file = args.config
